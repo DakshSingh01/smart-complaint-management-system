@@ -1,70 +1,83 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import axios from "../api/axios";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
-  const submitHandler = async (e) => {
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/auth/login`,
-        {
-          email,
-          password,
-        }
-      );
+      const res = await axios.post("/users/login", formData);
 
-      localStorage.setItem("userInfo", JSON.stringify(data));
+      console.log(res.data);
 
-      alert("Login Success");
+      if (res.data) {
+        localStorage.setItem(
+          "user",
+          JSON.stringify(res.data)
+        );
 
-      navigate("/dashboard");
+        alert("Login Success");
+
+        navigate("/dashboard");
+      } else {
+        alert("Login Failed");
+      }
     } catch (error) {
       console.log(error);
 
       alert(
-        error.response?.data?.message || "Login Failed"
+        error.response?.data?.message ||
+          "Invalid Email or Password"
       );
     }
   };
 
   return (
-    <div className="auth-layout">
-      <div className="auth-image">
+    <div className="auth-container">
+      <div className="auth-left">
         <img
           src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png"
           alt=""
         />
       </div>
 
-      <div className="auth-container">
-        <form className="auth-card" onSubmit={submitHandler}>
+      <div className="auth-right">
+        <form className="auth-box" onSubmit={handleLogin}>
           <h1>Welcome Back 👋</h1>
 
           <p>Login to continue using ResolveAI</p>
 
           <input
             type="email"
+            name="email"
             placeholder="Enter Email"
-            value={email}
-            onChange={(e) =>
-              setEmail(e.target.value)
-            }
+            value={formData.email}
+            onChange={handleChange}
+            required
           />
 
           <input
             type="password"
+            name="password"
             placeholder="Enter Password"
-            value={password}
-            onChange={(e) =>
-              setPassword(e.target.value)
-            }
+            value={formData.password}
+            onChange={handleChange}
+            required
           />
 
           <button type="submit">
@@ -72,7 +85,7 @@ const Login = () => {
           </button>
 
           <span>
-            Don’t have account?
+            Don't have account?{" "}
             <Link to="/register">
               Register
             </Link>
