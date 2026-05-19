@@ -1,27 +1,19 @@
 import { useState } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
-
 import API from "../api/axios";
 
 const Register = () => {
 
   const navigate = useNavigate();
 
-  const [formData, setFormData] =
-    useState({
-      name: "",
-      email: "",
-      password: ""
-    });
+  const [name, setName] =
+    useState("");
 
-  const changeHandler = (e) => {
+  const [email, setEmail] =
+    useState("");
 
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  const [password, setPassword] =
+    useState("");
 
   const submitHandler = async (e) => {
 
@@ -29,17 +21,32 @@ const Register = () => {
 
     try {
 
-      await API.post(
-        "/auth/register",
-        formData
+      const { data } =
+        await API.post(
+          "/auth/register",
+          {
+            name,
+            email,
+            password,
+          }
+        );
+
+      alert("Registration Successful");
+
+      localStorage.setItem(
+        "userInfo",
+        JSON.stringify(data)
       );
 
-      navigate("/login");
+      navigate("/dashboard");
 
     } catch (error) {
 
+      console.log(error);
+
       alert(
-        error.response?.data?.message
+        error?.response?.data?.message ||
+        "Something went wrong"
       );
     }
   };
@@ -52,7 +59,7 @@ const Register = () => {
 
         <img
           src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-          alt=""
+          alt="register"
         />
 
       </div>
@@ -75,25 +82,31 @@ const Register = () => {
           <input
             type="text"
             placeholder="Enter Name"
-            name="name"
-            value={formData.name}
-            onChange={changeHandler}
+            value={name}
+            onChange={(e) =>
+              setName(e.target.value)
+            }
+            required
           />
 
           <input
             type="email"
             placeholder="Enter Email"
-            name="email"
-            value={formData.email}
-            onChange={changeHandler}
+            value={email}
+            onChange={(e) =>
+              setEmail(e.target.value)
+            }
+            required
           />
 
           <input
             type="password"
             placeholder="Enter Password"
-            name="password"
-            value={formData.password}
-            onChange={changeHandler}
+            value={password}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
+            required
           />
 
           <button type="submit">
