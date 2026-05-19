@@ -3,8 +3,12 @@ import axios from "axios";
 
 const ComplaintForm = () => {
 
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [location, setLocation] = useState("");
 
   const submitHandler = async (e) => {
 
@@ -19,8 +23,12 @@ const ComplaintForm = () => {
       await axios.post(
         "https://smart-complaint-management-system-1-1ymp.onrender.com/api/complaints",
         {
+          name,
+          email,
           title,
           description,
+          category,
+          location,
         },
         {
           headers: {
@@ -29,16 +37,23 @@ const ComplaintForm = () => {
         }
       );
 
-      alert("Complaint Submitted");
+      alert("Complaint Submitted Successfully");
 
+      setName("");
+      setEmail("");
       setTitle("");
       setDescription("");
+      setCategory("");
+      setLocation("");
 
     } catch (error) {
 
       console.log(error);
 
-      alert("Something went wrong");
+      alert(
+        error.response?.data?.message ||
+        "Something went wrong"
+      );
     }
   };
 
@@ -57,6 +72,24 @@ const ComplaintForm = () => {
 
           <input
             type="text"
+            placeholder="Name"
+            value={name}
+            onChange={(e) =>
+              setName(e.target.value)
+            }
+          />
+
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) =>
+              setEmail(e.target.value)
+            }
+          />
+
+          <input
+            type="text"
             placeholder="Complaint Title"
             value={title}
             onChange={(e) =>
@@ -69,6 +102,24 @@ const ComplaintForm = () => {
             value={description}
             onChange={(e) =>
               setDescription(e.target.value)
+            }
+          />
+
+          <input
+            type="text"
+            placeholder="Category"
+            value={category}
+            onChange={(e) =>
+              setCategory(e.target.value)
+            }
+          />
+
+          <input
+            type="text"
+            placeholder="Location"
+            value={location}
+            onChange={(e) =>
+              setLocation(e.target.value)
             }
           />
 
