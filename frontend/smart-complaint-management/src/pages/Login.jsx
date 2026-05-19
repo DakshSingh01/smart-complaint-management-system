@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
 const Login = () => {
 
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
+
   const [password, setPassword] = useState("");
 
   const submitHandler = async (e) => {
@@ -28,11 +31,9 @@ const Login = () => {
 
       alert("Login Successful");
 
-      window.location.hash = "#/dashboard";
+      navigate("/dashboard");
 
     } catch (error) {
-
-      console.log(error);
 
       alert(
         error.response?.data?.message ||
