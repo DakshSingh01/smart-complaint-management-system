@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Sidebar from "../components/Sidebar";
 
 const ComplaintForm = () => {
 
@@ -63,89 +64,93 @@ const ComplaintForm = () => {
 
   return (
 
-  <div className="dashboard-layout">
+    <div className="dashboard-layout">
 
-    <div className="dashboard-main">
+      {/* SIDEBAR */}
+      <Sidebar />
 
-      <div className="page-container">
+      {/* MAIN CONTENT */}
+      <div className="dashboard-main">
 
-        <form
-          className="form-container"
-          onSubmit={submitHandler}
-        >
+        <div className="page-container">
 
-          <h1>Create Complaint</h1>
+          <form
+            className="form-container"
+            onSubmit={submitHandler}
+          >
 
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            value={formData.name}
-            onChange={changeHandler}
-          />
+            <h1>Create Complaint</h1>
 
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={changeHandler}
-          />
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={formData.name}
+              onChange={changeHandler}
+            />
 
-          <input
-            type="text"
-            name="title"
-            placeholder="Complaint Title"
-            value={formData.title}
-            onChange={changeHandler}
-          />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={changeHandler}
+            />
 
-          <textarea
-            name="description"
-            placeholder="Description"
-            value={formData.description}
-            onChange={changeHandler}
-          />
+            <input
+              type="text"
+              name="title"
+              placeholder="Complaint Title"
+              value={formData.title}
+              onChange={changeHandler}
+            />
 
-          <input
-            type="text"
-            name="category"
-            placeholder="Category"
-            value={formData.category}
-            onChange={changeHandler}
-          />
+            <textarea
+              name="description"
+              placeholder="Description"
+              value={formData.description}
+              onChange={changeHandler}
+            />
 
-          <input
-            type="text"
-            name="location"
-            placeholder="Location"
-            value={formData.location}
-            onChange={changeHandler}
-          />
+            <input
+              type="text"
+              name="category"
+              placeholder="Category"
+              value={formData.category}
+              onChange={changeHandler}
+            />
 
-          <div className="button-group">
+            <input
+              type="text"
+              name="location"
+              placeholder="Location"
+              value={formData.location}
+              onChange={changeHandler}
+            />
 
-            <button type="submit">
-              Submit Complaint
-            </button>
+            <div className="button-group">
 
-            <button
-              type="button"
-              className="ai-btn"
-            >
-              Analyze with AI
-            </button>
+              <button type="submit">
+                Submit Complaint
+              </button>
 
-          </div>
+              <button
+                type="button"
+                className="ai-btn"
+              >
+                Analyze with AI
+              </button>
 
-        </form>
+            </div>
+
+          </form>
+
+        </div>
 
       </div>
 
     </div>
-
-  </div>
-);
+  );
 };
 
 export default ComplaintForm;
