@@ -5,6 +5,7 @@ import cors from "cors";
 
 import authRoutes from "./routes/authRoutes.js";
 import complaintRoutes from "./routes/complaintRoutes.js";
+import aiRoutes from "./routes/aiRoutes.js";
 
 dotenv.config();
 
@@ -33,9 +34,11 @@ app.get("/", (req, res) => {
 
 });
 
-app.use("/api/users", userRoutes);
+app.use("/api/users", authRoutes);
 
 app.use("/api/complaints", complaintRoutes);
+
+app.use("/api/ai", aiRoutes);
 
 const PORT = process.env.PORT || 5000;
 
