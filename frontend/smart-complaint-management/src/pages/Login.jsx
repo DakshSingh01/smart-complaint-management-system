@@ -1,76 +1,53 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import API from "../api/axios";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
-
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const submitHandler = async (e) => {
-
     e.preventDefault();
 
     try {
-
-      const { data } = await API.post(
-        "/users/login",
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/auth/login`,
         {
           email,
           password,
         }
       );
 
-      localStorage.setItem(
-        "userInfo",
-        JSON.stringify(data)
-      );
+      localStorage.setItem("userInfo", JSON.stringify(data));
 
       alert("Login Success");
 
-      window.location.href = "/dashboard";
-
+      navigate("/dashboard");
     } catch (error) {
-
       console.log(error);
 
       alert(
-        error?.response?.data?.message ||
-        "Login Failed"
+        error.response?.data?.message || "Login Failed"
       );
     }
   };
 
   return (
-
     <div className="auth-layout">
-
       <div className="auth-image">
-
         <img
           src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png"
           alt=""
         />
-
       </div>
 
       <div className="auth-container">
+        <form className="auth-card" onSubmit={submitHandler}>
+          <h1>Welcome Back 👋</h1>
 
-        <form
-          className="auth-card"
-          onSubmit={submitHandler}
-        >
-
-          <h1>
-            Welcome Back
-          </h1>
-
-          <p>
-            👋 Login to continue using ResolveAI
-          </p>
+          <p>Login to continue using ResolveAI</p>
 
           <input
             type="email"
@@ -95,18 +72,13 @@ const Login = () => {
           </button>
 
           <span>
-            Don't have account?
-
+            Don’t have account?
             <Link to="/register">
               Register
             </Link>
-
           </span>
-
         </form>
-
       </div>
-
     </div>
   );
 };
