@@ -3,12 +3,21 @@ import axios from "axios";
 
 const ComplaintForm = () => {
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [location, setLocation] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    title: "",
+    description: "",
+    category: "",
+    location: "",
+  });
+
+  const changeHandler = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const submitHandler = async (e) => {
 
@@ -22,14 +31,7 @@ const ComplaintForm = () => {
 
       await axios.post(
         "https://smart-complaint-management-system-1-1ymp.onrender.com/api/complaints",
-        {
-          name,
-          email,
-          title,
-          description,
-          category,
-          location,
-        },
+        formData,
         {
           headers: {
             Authorization: `Bearer ${userInfo.token}`,
@@ -39,12 +41,14 @@ const ComplaintForm = () => {
 
       alert("Complaint Submitted Successfully");
 
-      setName("");
-      setEmail("");
-      setTitle("");
-      setDescription("");
-      setCategory("");
-      setLocation("");
+      setFormData({
+        name: "",
+        email: "",
+        title: "",
+        description: "",
+        category: "",
+        location: "",
+      });
 
     } catch (error) {
 
@@ -72,55 +76,49 @@ const ComplaintForm = () => {
 
           <input
             type="text"
+            name="name"
             placeholder="Name"
-            value={name}
-            onChange={(e) =>
-              setName(e.target.value)
-            }
+            value={formData.name}
+            onChange={changeHandler}
           />
 
           <input
             type="email"
+            name="email"
             placeholder="Email"
-            value={email}
-            onChange={(e) =>
-              setEmail(e.target.value)
-            }
+            value={formData.email}
+            onChange={changeHandler}
           />
 
           <input
             type="text"
+            name="title"
             placeholder="Complaint Title"
-            value={title}
-            onChange={(e) =>
-              setTitle(e.target.value)
-            }
+            value={formData.title}
+            onChange={changeHandler}
           />
 
           <textarea
+            name="description"
             placeholder="Description"
-            value={description}
-            onChange={(e) =>
-              setDescription(e.target.value)
-            }
+            value={formData.description}
+            onChange={changeHandler}
           />
 
           <input
             type="text"
+            name="category"
             placeholder="Category"
-            value={category}
-            onChange={(e) =>
-              setCategory(e.target.value)
-            }
+            value={formData.category}
+            onChange={changeHandler}
           />
 
           <input
             type="text"
+            name="location"
             placeholder="Location"
-            value={location}
-            onChange={(e) =>
-              setLocation(e.target.value)
-            }
+            value={formData.location}
+            onChange={changeHandler}
           />
 
           <div className="button-group">
