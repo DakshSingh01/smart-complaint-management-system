@@ -1,19 +1,14 @@
 import { useState } from "react";
-
-import { Link, useNavigate }
-from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
 
 const Login = () => {
 
   const navigate = useNavigate();
 
-  const [email, setEmail] =
-    useState("");
-
-  const [password, setPassword] =
-    useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const submitHandler = async (e) => {
 
@@ -21,14 +16,13 @@ const Login = () => {
 
     try {
 
-      const { data } =
-        await API.post(
-          "/auth/login",
-          {
-            email,
-            password,
-          }
-        );
+      const { data } = await API.post(
+        "/users/login",
+        {
+          email,
+          password,
+        }
+      );
 
       localStorage.setItem(
         "userInfo",
@@ -37,7 +31,7 @@ const Login = () => {
 
       alert("Login Success");
 
-      navigate("/dashboard");
+      window.location.href = "/dashboard";
 
     } catch (error) {
 
@@ -57,7 +51,7 @@ const Login = () => {
       <div className="auth-image">
 
         <img
-          src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png"
+          src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png"
           alt=""
         />
 
@@ -71,12 +65,11 @@ const Login = () => {
         >
 
           <h1>
-            Welcome Back 👋
+            Welcome Back
           </h1>
 
           <p>
-            Login to continue using
-            ResolveAI
+            👋 Login to continue using ResolveAI
           </p>
 
           <input
@@ -86,7 +79,6 @@ const Login = () => {
             onChange={(e) =>
               setEmail(e.target.value)
             }
-            required
           />
 
           <input
@@ -96,7 +88,6 @@ const Login = () => {
             onChange={(e) =>
               setPassword(e.target.value)
             }
-            required
           />
 
           <button type="submit">
@@ -105,9 +96,11 @@ const Login = () => {
 
           <span>
             Don't have account?
+
             <Link to="/register">
               Register
             </Link>
+
           </span>
 
         </form>
