@@ -1,10 +1,29 @@
 services:
+  # Backend API Service
+  - type: web
+    name: smart-complaint-management-api
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+
+  # Frontend Static Site
   - type: web
     name: smart-complaint-management
     env: static
     rootDir: frontend/smart-complaint-management
     buildCommand: npm run build
     staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false
     routes:
       - type: rewrite
         source: /*
