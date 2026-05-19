@@ -1,6 +1,7 @@
 import { useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate }
+from "react-router-dom";
 
 import API from "../api/axios";
 
@@ -8,19 +9,11 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const [formData, setFormData] =
-    useState({
-      email: "",
-      password: ""
-    });
+  const [email, setEmail] =
+    useState("");
 
-  const changeHandler = (e) => {
-
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  const [password, setPassword] =
+    useState("");
 
   const submitHandler = async (e) => {
 
@@ -28,22 +21,31 @@ const Login = () => {
 
     try {
 
-      const { data } = await API.post(
-        "/auth/login",
-        formData
-      );
+      const { data } =
+        await API.post(
+          "/auth/login",
+          {
+            email,
+            password,
+          }
+        );
 
       localStorage.setItem(
-        "token",
-        data.token
+        "userInfo",
+        JSON.stringify(data)
       );
+
+      alert("Login Success");
 
       navigate("/dashboard");
 
     } catch (error) {
 
+      console.log(error);
+
       alert(
-        error.response?.data?.message
+        error?.response?.data?.message ||
+        "Login Failed"
       );
     }
   };
@@ -55,7 +57,7 @@ const Login = () => {
       <div className="auth-image">
 
         <img
-          src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png"
+          src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png"
           alt=""
         />
 
@@ -73,23 +75,28 @@ const Login = () => {
           </h1>
 
           <p>
-            Login to continue using ResolveAI
+            Login to continue using
+            ResolveAI
           </p>
 
           <input
             type="email"
             placeholder="Enter Email"
-            name="email"
-            value={formData.email}
-            onChange={changeHandler}
+            value={email}
+            onChange={(e) =>
+              setEmail(e.target.value)
+            }
+            required
           />
 
           <input
             type="password"
             placeholder="Enter Password"
-            name="password"
-            value={formData.password}
-            onChange={changeHandler}
+            value={password}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
+            required
           />
 
           <button type="submit">
