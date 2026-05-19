@@ -63,6 +63,8 @@ const ComplaintForm = () => {
 
   return (
 
+  <div className="dashboard-layout">
+
     <div className="dashboard-main">
 
       <div className="page-container">
@@ -141,7 +143,9 @@ const ComplaintForm = () => {
       </div>
 
     </div>
-  );
+
+  </div>
+);
 };
 
 export default ComplaintForm;
