@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
 const Register = () => {
 
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
-
   const [email, setEmail] = useState("");
-
   const [password, setPassword] = useState("");
 
   const submitHandler = async (e) => {
@@ -32,9 +32,11 @@ const Register = () => {
 
       alert("Registration Successful");
 
-      window.location.hash = "/dashboard";
+      navigate("/dashboard");
 
     } catch (error) {
+
+      console.log(error);
 
       alert(
         error.response?.data?.message ||
