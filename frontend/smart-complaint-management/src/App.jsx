@@ -4,6 +4,7 @@ import {
   BrowserRouter,
   Routes,
   Route,
+  Navigate,
 } from "react-router-dom";
 
 import Landing from "./pages/Landing";
@@ -17,61 +18,83 @@ import UpdateComplaint from "./pages/UpdateComplaint";
 import AIAnalysis from "./pages/AIAnalysis";
 import Profile from "./pages/Profile";
 
+import ProtectedRoute from "./components/ProtectedRoute";
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* PUBLIC ROUTES */}
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-        <Route
-          path="/"
-          element={<Landing />}
-        />
-
-        <Route
-          path="/login"
-          element={<Login />}
-        />
-
-        <Route
-          path="/register"
-          element={<Register />}
-        />
-
+        {/* PROTECTED ROUTES */}
         <Route
           path="/dashboard"
-          element={<Dashboard />}
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/create-complaint"
-          element={<ComplaintForm />}
+          element={
+            <ProtectedRoute>
+              <ComplaintForm />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/complaints"
-          element={<ComplaintList />}
+          element={
+            <ProtectedRoute>
+              <ComplaintList />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/complaint/:id"
-          element={<ComplaintDetails />}
+          element={
+            <ProtectedRoute>
+              <ComplaintDetails />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/update-complaint/:id"
-          element={<UpdateComplaint />}
+          element={
+            <ProtectedRoute>
+              <UpdateComplaint />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/ai-analysis"
-          element={<AIAnalysis />}
+          element={
+            <ProtectedRoute>
+              <AIAnalysis />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/profile"
-          element={<Profile />}
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
         />
 
+        {/* FALLBACK */}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   );
