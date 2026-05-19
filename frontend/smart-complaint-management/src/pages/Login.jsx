@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+
+import {
+  useNavigate,
+  Link,
+} from "react-router-dom";
+
 import axios from "axios";
 
 const Login = () => {
@@ -7,13 +12,18 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
+
   const [password, setPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
 
   const submitHandler = async (e) => {
 
     e.preventDefault();
 
     try {
+
+      setLoading(true);
 
       const { data } = await axios.post(
         "https://smart-complaint-management-system-1-1ymp.onrender.com/api/auth/login",
@@ -23,9 +33,12 @@ const Login = () => {
         }
       );
 
-      localStorage.setItem("userInfo", JSON.stringify(data));
+      localStorage.setItem(
+        "userInfo",
+        JSON.stringify(data)
+      );
 
-      alert("Login Successful");
+      alert("Login Successful ✅");
 
       navigate("/dashboard");
 
@@ -34,8 +47,13 @@ const Login = () => {
       console.log(error);
 
       alert(
-        error.response?.data?.message || "Login Failed"
+        error.response?.data?.message ||
+        "Login Failed ❌"
       );
+
+    } finally {
+
+      setLoading(false);
     }
   };
 
@@ -44,10 +62,12 @@ const Login = () => {
     <div className="auth-layout">
 
       <div className="auth-image">
+
         <img
           src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png"
-          alt=""
+          alt="robot"
         />
+
       </div>
 
       <div className="auth-container">
@@ -57,7 +77,9 @@ const Login = () => {
           onSubmit={submitHandler}
         >
 
-          <h1>Welcome Back 👋</h1>
+          <h1>
+            Welcome Back 👋
+          </h1>
 
           <p>
             Login to continue using ResolveAI
@@ -83,19 +105,31 @@ const Login = () => {
             required
           />
 
-          <button type="submit">
-            Login
+          <button
+            type="submit"
+            disabled={loading}
+          >
+            {
+              loading
+                ? "Logging in..."
+                : "Login"
+            }
           </button>
 
           <span>
+
             Don't have account?
+
             <Link to="/register">
               Register
             </Link>
+
           </span>
 
         </form>
+
       </div>
+
     </div>
   );
 };
