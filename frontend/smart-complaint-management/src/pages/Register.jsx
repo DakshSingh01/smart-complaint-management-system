@@ -1,19 +1,12 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import API from "../api/axios";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Register = () => {
 
-  const navigate = useNavigate();
-
-  const [name, setName] =
-    useState("");
-
-  const [email, setEmail] =
-    useState("");
-
-  const [password, setPassword] =
-    useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const submitHandler = async (e) => {
 
@@ -21,32 +14,31 @@ const Register = () => {
 
     try {
 
-      const { data } =
-        await API.post(
-          "/auth/register",
-          {
-            name,
-            email,
-            password,
-          }
-        );
-
-      alert("Registration Successful");
+      const { data } = await axios.post(
+        "https://smart-complaint-management-system-1-1ymp.onrender.com/api/auth/register",
+        {
+          name,
+          email,
+          password,
+        }
+      );
 
       localStorage.setItem(
         "userInfo",
         JSON.stringify(data)
       );
 
-      navigate("/dashboard");
+      alert("Registration Successful");
+
+      window.location.hash = "#/dashboard";
 
     } catch (error) {
 
       console.log(error);
 
       alert(
-        error?.response?.data?.message ||
-        "Something went wrong"
+        error.response?.data?.message ||
+        "Registration Failed"
       );
     }
   };
@@ -58,8 +50,8 @@ const Register = () => {
       <div className="auth-image">
 
         <img
-          src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-          alt="register"
+          src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png"
+          alt=""
         />
 
       </div>
@@ -76,7 +68,7 @@ const Register = () => {
           </h1>
 
           <p>
-            Join ResolveAI Platform
+            Join ResolveAI Complaint System
           </p>
 
           <input
@@ -114,10 +106,13 @@ const Register = () => {
           </button>
 
           <span>
+
             Already have account?
+
             <Link to="/login">
               Login
             </Link>
+
           </span>
 
         </form>

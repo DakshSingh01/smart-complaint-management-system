@@ -3,20 +3,17 @@ import React from "react";
 import {
   Link,
   useLocation,
-  useNavigate,
 } from "react-router-dom";
 
 const Sidebar = () => {
 
   const location = useLocation();
 
-  const navigate = useNavigate();
-
   const logoutHandler = () => {
 
     localStorage.removeItem("userInfo");
 
-    navigate("/login");
+    window.location.hash = "#/login";
   };
 
   return (

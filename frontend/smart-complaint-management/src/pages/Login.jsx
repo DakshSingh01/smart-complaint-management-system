@@ -1,29 +1,17 @@
 import { useState } from "react";
-
-import {
-  useNavigate,
-  Link,
-} from "react-router-dom";
-
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Login = () => {
 
-  const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
-
   const [password, setPassword] = useState("");
-
-  const [loading, setLoading] = useState(false);
 
   const submitHandler = async (e) => {
 
     e.preventDefault();
 
     try {
-
-      setLoading(true);
 
       const { data } = await axios.post(
         "https://smart-complaint-management-system-1-1ymp.onrender.com/api/auth/login",
@@ -38,9 +26,9 @@ const Login = () => {
         JSON.stringify(data)
       );
 
-      alert("Login Successful ✅");
+      alert("Login Successful");
 
-      navigate("/dashboard");
+      window.location.hash = "#/dashboard";
 
     } catch (error) {
 
@@ -48,12 +36,8 @@ const Login = () => {
 
       alert(
         error.response?.data?.message ||
-        "Login Failed ❌"
+        "Login Failed"
       );
-
-    } finally {
-
-      setLoading(false);
     }
   };
 
@@ -65,7 +49,7 @@ const Login = () => {
 
         <img
           src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png"
-          alt="robot"
+          alt=""
         />
 
       </div>
@@ -105,15 +89,8 @@ const Login = () => {
             required
           />
 
-          <button
-            type="submit"
-            disabled={loading}
-          >
-            {
-              loading
-                ? "Logging in..."
-                : "Login"
-            }
+          <button type="submit">
+            Login
           </button>
 
           <span>
