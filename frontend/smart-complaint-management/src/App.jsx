@@ -1,11 +1,14 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import ComplaintForm from "./pages/ComplaintForm";
-
-import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
 
@@ -14,6 +17,11 @@ function App() {
     <BrowserRouter>
 
       <Routes>
+
+        <Route
+          path="/"
+          element={<Navigate to="/login" />}
+        />
 
         <Route
           path="/login"
@@ -27,20 +35,12 @@ function App() {
 
         <Route
           path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
+          element={<Dashboard />}
         />
 
         <Route
           path="/create-complaint"
-          element={
-            <ProtectedRoute>
-              <ComplaintForm />
-            </ProtectedRoute>
-          }
+          element={<ComplaintForm />}
         />
 
       </Routes>
