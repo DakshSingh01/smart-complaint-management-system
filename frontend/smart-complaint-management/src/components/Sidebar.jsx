@@ -1,94 +1,110 @@
-import {
-  LayoutDashboard,
-  FilePlus2,
-  ClipboardList,
-  User,
-  LogOut,
-  Sparkles
-} from "lucide-react";
-
-import { Link, useNavigate } from "react-router-dom";
-
-import { motion } from "framer-motion";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const Sidebar = () => {
 
-  const navigate = useNavigate();
-
-  const logoutHandler = () => {
-
-    localStorage.removeItem("token");
-
-    navigate("/login");
-  };
+  const location = useLocation();
 
   return (
-    <motion.div
-      className="sidebar"
-      initial={{ x: -80, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-    >
+
+    <div className="sidebar">
 
       <div>
 
         <div className="logo-box">
 
-          <div className="logo-icon">
-            <Sparkles />
-          </div>
+          <div className="logo-top">
 
-          <div>
-            <h2 className="logo">
-              ResolveAI
-            </h2>
+            <div className="logo-icon">
+              ✨
+            </div>
 
-            <p>
-              Smart Complaint System
-            </p>
+            <div>
+
+              <h1 className="logo">
+                ResolveAI
+              </h1>
+
+              <p>Smart Complaint System</p>
+
+            </div>
+
           </div>
 
         </div>
 
-        <nav className="sidebar-links">
+        <div className="sidebar-links">
 
-          <Link to="/dashboard">
-            <LayoutDashboard size={20} />
+          <Link
+            to="/dashboard"
+            className={
+              location.pathname === "/dashboard"
+                ? "active"
+                : ""
+            }
+          >
             Dashboard
           </Link>
 
-          <Link to="/create-complaint">
-            <FilePlus2 size={20} />
+          <Link
+            to="/create-complaint"
+            className={
+              location.pathname === "/create-complaint"
+                ? "active"
+                : ""
+            }
+          >
             Add Complaint
           </Link>
 
-          <Link to="/ai-analysis">
-            <Sparkles size={20} />
+          <Link
+            to="/ai-analysis"
+            className={
+              location.pathname === "/ai-analysis"
+                ? "active"
+                : ""
+            }
+          >
             AI Analysis
           </Link>
 
-          <Link to="/complaints">
-            <ClipboardList size={20} />
+          <Link
+            to="/complaints"
+            className={
+              location.pathname === "/complaints"
+                ? "active"
+                : ""
+            }
+          >
             Complaints
           </Link>
 
-          <Link to="/profile">
-            <User size={20} />
+          <Link
+            to="/profile"
+            className={
+              location.pathname === "/profile"
+                ? "active"
+                : ""
+            }
+          >
             Profile
           </Link>
 
-        </nav>
+        </div>
 
       </div>
 
       <button
         className="logout-btn"
-        onClick={logoutHandler}
+        onClick={() => {
+          localStorage.removeItem("userInfo");
+          window.location.href = "/login";
+        }}
       >
-        <LogOut size={18} />
         Logout
       </button>
 
-    </motion.div>
+    </div>
   );
 };
 
