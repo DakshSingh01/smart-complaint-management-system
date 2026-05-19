@@ -1,5 +1,5 @@
 import { useState } from "react";
-import API from "../api/axios";
+import axios from "axios";
 
 const ComplaintForm = () => {
 
@@ -12,23 +12,36 @@ const ComplaintForm = () => {
 
     try {
 
-      await API.post(
-        "/api/complaints",
+      const userInfo = JSON.parse(
+        localStorage.getItem("userInfo")
+      );
+
+      await axios.post(
+        "https://smart-complaint-management-system-1-1ymp.onrender.com/api/complaints",
         {
           title,
           description,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+          },
         }
       );
 
-      alert("Complaint Added");
+      alert("Complaint Submitted");
 
-      window.location.href = "/dashboard";
+      setTitle("");
+      setDescription("");
 
     } catch (error) {
 
       console.log(error);
 
-      alert("Error");
+      alert(
+        error.response?.data?.message ||
+        "Something went wrong"
+      );
     }
   };
 
@@ -36,11 +49,14 @@ const ComplaintForm = () => {
 
     <div className="dashboard-main">
 
-      <div className="form-container">
+      <div className="page-container">
 
-        <h1>Create Complaint</h1>
+        <form
+          className="form-container"
+          onSubmit={submitHandler}
+        >
 
-        <form onSubmit={submitHandler}>
+          <h1>Create Complaint</h1>
 
           <input
             type="text"
@@ -49,6 +65,7 @@ const ComplaintForm = () => {
             onChange={(e) =>
               setTitle(e.target.value)
             }
+            required
           />
 
           <textarea
@@ -57,11 +74,23 @@ const ComplaintForm = () => {
             onChange={(e) =>
               setDescription(e.target.value)
             }
-          />
+            required
+          ></textarea>
 
-          <button type="submit">
-            Submit Complaint
-          </button>
+          <div className="button-group">
+
+            <button type="submit">
+              Submit Complaint
+            </button>
+
+            <button
+              type="button"
+              className="ai-btn"
+            >
+              Analyze with AI
+            </button>
+
+          </div>
 
         </form>
 
