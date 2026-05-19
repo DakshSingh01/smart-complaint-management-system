@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Sidebar from "../components/Sidebar";
 
 const ComplaintForm = () => {
 
@@ -42,18 +41,7 @@ const ComplaintForm = () => {
 
       alert("Complaint Submitted Successfully");
 
-      setFormData({
-        name: "",
-        email: "",
-        title: "",
-        description: "",
-        category: "",
-        location: "",
-      });
-
     } catch (error) {
-
-      console.log(error);
 
       alert(
         error.response?.data?.message ||
@@ -64,90 +52,78 @@ const ComplaintForm = () => {
 
   return (
 
-    <div className="dashboard-layout">
+    <div className="page-container">
 
-      {/* SIDEBAR */}
-      <Sidebar />
+      <form
+        className="form-container"
+        onSubmit={submitHandler}
+      >
 
-      {/* MAIN CONTENT */}
-      <div className="dashboard-main">
+        <h1>Create Complaint</h1>
 
-        <div className="page-container">
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={formData.name}
+          onChange={changeHandler}
+        />
 
-          <form
-            className="form-container"
-            onSubmit={submitHandler}
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={changeHandler}
+        />
+
+        <input
+          type="text"
+          name="title"
+          placeholder="Complaint Title"
+          value={formData.title}
+          onChange={changeHandler}
+        />
+
+        <textarea
+          name="description"
+          placeholder="Description"
+          value={formData.description}
+          onChange={changeHandler}
+        />
+
+        <input
+          type="text"
+          name="category"
+          placeholder="Category"
+          value={formData.category}
+          onChange={changeHandler}
+        />
+
+        <input
+          type="text"
+          name="location"
+          placeholder="Location"
+          value={formData.location}
+          onChange={changeHandler}
+        />
+
+        <div className="button-group">
+
+          <button type="submit">
+            Submit Complaint
+          </button>
+
+          <button
+            type="button"
+            className="ai-btn"
           >
-
-            <h1>Create Complaint</h1>
-
-            <input
-              type="text"
-              name="name"
-              placeholder="Name"
-              value={formData.name}
-              onChange={changeHandler}
-            />
-
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={changeHandler}
-            />
-
-            <input
-              type="text"
-              name="title"
-              placeholder="Complaint Title"
-              value={formData.title}
-              onChange={changeHandler}
-            />
-
-            <textarea
-              name="description"
-              placeholder="Description"
-              value={formData.description}
-              onChange={changeHandler}
-            />
-
-            <input
-              type="text"
-              name="category"
-              placeholder="Category"
-              value={formData.category}
-              onChange={changeHandler}
-            />
-
-            <input
-              type="text"
-              name="location"
-              placeholder="Location"
-              value={formData.location}
-              onChange={changeHandler}
-            />
-
-            <div className="button-group">
-
-              <button type="submit">
-                Submit Complaint
-              </button>
-
-              <button
-                type="button"
-                className="ai-btn"
-              >
-                Analyze with AI
-              </button>
-
-            </div>
-
-          </form>
+            Analyze with AI
+          </button>
 
         </div>
 
-      </div>
+      </form>
 
     </div>
   );
