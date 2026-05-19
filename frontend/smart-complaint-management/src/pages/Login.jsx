@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Login = () => {
-
-  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
 
@@ -31,7 +29,7 @@ const Login = () => {
 
       alert("Login Successful");
 
-      navigate("/dashboard");
+      window.location.hash = "/dashboard";
 
     } catch (error) {
 

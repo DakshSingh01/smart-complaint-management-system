@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Register = () => {
-
-  const navigate = useNavigate();
 
   const [name, setName] = useState("");
 
@@ -34,7 +32,7 @@ const Register = () => {
 
       alert("Registration Successful");
 
-      navigate("/dashboard");
+      window.location.hash = "/dashboard";
 
     } catch (error) {
 
