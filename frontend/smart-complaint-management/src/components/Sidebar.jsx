@@ -1,9 +1,22 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
 const Sidebar = () => {
 
   const location = useLocation();
+
+  const navigate = useNavigate();
+
+  const logoutHandler = () => {
+
+    localStorage.removeItem("userInfo");
+
+    navigate("/login");
+  };
 
   return (
 
@@ -25,7 +38,9 @@ const Sidebar = () => {
                 ResolveAI
               </h1>
 
-              <p>Smart Complaint System</p>
+              <p>
+                Smart Complaint System
+              </p>
 
             </div>
 
@@ -96,10 +111,7 @@ const Sidebar = () => {
 
       <button
         className="logout-btn"
-        onClick={() => {
-          localStorage.removeItem("userInfo");
-          window.location.href = "/login";
-        }}
+        onClick={logoutHandler}
       >
         Logout
       </button>
