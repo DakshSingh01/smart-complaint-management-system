@@ -2,9 +2,9 @@ import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
 
-  const token = localStorage.getItem("token");
+  const userInfo = localStorage.getItem("userInfo");
 
-  if (!token) {
+  if (!userInfo) {
     return <Navigate to="/login" />;
   }
 

@@ -1,47 +1,40 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
 const Login = () => {
 
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async (e) => {
+  const submitHandler = async (e) => {
 
     e.preventDefault();
 
     try {
 
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/users/login`,
+      const { data } = await axios.post(
+        "https://smart-complaint-management-system-1-1ymp.onrender.com/api/auth/login",
         {
           email,
           password,
         }
       );
 
-      localStorage.setItem(
-        "token",
-        res.data.token
-      );
+      localStorage.setItem("userInfo", JSON.stringify(data));
 
-      localStorage.setItem(
-        "userInfo",
-        JSON.stringify(res.data)
-      );
+      alert("Login Successful");
 
-      alert("Login Success");
-
-      window.location.href = "/dashboard";
+      navigate("/dashboard");
 
     } catch (error) {
 
       console.log(error);
 
       alert(
-        error.response?.data?.message ||
-        "Login Failed"
+        error.response?.data?.message || "Login Failed"
       );
     }
   };
@@ -52,14 +45,17 @@ const Login = () => {
 
       <div className="auth-image">
         <img
-          src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png"
+          src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png"
           alt=""
         />
       </div>
 
       <div className="auth-container">
 
-        <div className="auth-card">
+        <form
+          className="auth-card"
+          onSubmit={submitHandler}
+        >
 
           <h1>Welcome Back 👋</h1>
 
@@ -67,31 +63,29 @@ const Login = () => {
             Login to continue using ResolveAI
           </p>
 
-          <form onSubmit={handleLogin}>
+          <input
+            type="email"
+            placeholder="Enter Email"
+            value={email}
+            onChange={(e) =>
+              setEmail(e.target.value)
+            }
+            required
+          />
 
-            <input
-              type="email"
-              placeholder="Enter Email"
-              value={email}
-              onChange={(e) =>
-                setEmail(e.target.value)
-              }
-            />
+          <input
+            type="password"
+            placeholder="Enter Password"
+            value={password}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
+            required
+          />
 
-            <input
-              type="password"
-              placeholder="Enter Password"
-              value={password}
-              onChange={(e) =>
-                setPassword(e.target.value)
-              }
-            />
-
-            <button type="submit">
-              Login
-            </button>
-
-          </form>
+          <button type="submit">
+            Login
+          </button>
 
           <span>
             Don't have account?
@@ -100,10 +94,8 @@ const Login = () => {
             </Link>
           </span>
 
-        </div>
-
+        </form>
       </div>
-
     </div>
   );
 };
