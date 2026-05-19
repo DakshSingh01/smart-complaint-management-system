@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 const ComplaintForm = () => {
@@ -38,10 +38,7 @@ const ComplaintForm = () => {
 
       console.log(error);
 
-      alert(
-        error.response?.data?.message ||
-        "Something went wrong"
-      );
+      alert("Something went wrong");
     }
   };
 
@@ -65,7 +62,6 @@ const ComplaintForm = () => {
             onChange={(e) =>
               setTitle(e.target.value)
             }
-            required
           />
 
           <textarea
@@ -74,8 +70,7 @@ const ComplaintForm = () => {
             onChange={(e) =>
               setDescription(e.target.value)
             }
-            required
-          ></textarea>
+          />
 
           <div className="button-group">
 
