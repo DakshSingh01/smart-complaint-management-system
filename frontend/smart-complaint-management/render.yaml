@@ -1,5 +1,5 @@
 services:
-  # Backend API Service
+  # Backend
   - type: web
     name: smart-complaint-management-api
     env: node
@@ -14,12 +14,12 @@ services:
       - key: OPENAI_API_KEY
         sync: false
 
-  # Frontend Static Site
+  # Frontend
   - type: web
     name: smart-complaint-management
     env: static
-    rootDir: frontend/smart-complaint-management
-    buildCommand: npm run build
+    rootDir: .
+    buildCommand: npm install && npm run build
     staticPublishPath: ./dist
     envVars:
       - key: VITE_API_URL
