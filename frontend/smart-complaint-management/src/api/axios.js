@@ -5,11 +5,16 @@ const API = axios.create({
 });
 
 API.interceptors.request.use((req) => {
-  const userInfo = localStorage.getItem("userInfo");
-  if (userInfo) {
-    const parsed = JSON.parse(userInfo);
-    const token = parsed.token || parsed;
-    if (token) req.headers.Authorization = `Bearer ${token}`;
+  try {
+    const userInfo = localStorage.getItem("userInfo");
+    if (userInfo) {
+      const parsed = JSON.parse(userInfo);
+      if (parsed.token) {
+        req.headers.Authorization = `Bearer ${parsed.token}`;
+      }
+    }
+  } catch (e) {
+    console.error("Token error", e);
   }
   return req;
 });
