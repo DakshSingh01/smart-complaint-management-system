@@ -1197,3 +1197,115 @@ ONLY AI + PROFILE + FORM CENTER
 
   flex:1;
 }
+
+/* =========================
+   DASHBOARD TOP
+========================= */
+
+.dashboard-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.refresh-btn {
+  padding: 12px 24px;
+  border-radius: 14px;
+  background: rgba(124, 58, 237, 0.2);
+  border: 1px solid rgba(124, 58, 237, 0.35);
+  color: #a78bfa;
+  font-size: 15px;
+  font-weight: 600;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.refresh-btn:hover {
+  background: rgba(124, 58, 237, 0.35);
+  transform: translateY(-2px);
+}
+
+/* =========================
+   ERROR BANNER
+========================= */
+
+.error-banner {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+  padding: 16px 22px;
+  border-radius: 16px;
+  margin-bottom: 28px;
+  font-size: 15px;
+}
+
+/* =========================
+   SKELETON LOADER
+========================= */
+
+.loading-grid {
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+}
+
+.skeleton {
+  min-height: 240px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-state {
+  margin-top: 60px;
+  text-align: center;
+  color: #64748b;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 16px;
+}
+
+.empty-state h3 {
+  font-size: 1.4rem;
+  color: #94a3b8;
+  margin-bottom: 8px;
+}
+
+.empty-state p {
+  font-size: 15px;
+}
+
+/* =========================
+   RECENT SECTION
+========================= */
+
+.recent-section {
+  margin-top: 50px;
+}
+
+.section-header {
+  margin-bottom: 25px;
+}
+
+.section-header h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
